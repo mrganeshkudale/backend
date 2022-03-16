@@ -1,0 +1,44 @@
+replicaCount: 1
+memory_limit: 750
+
+resources:
+  requests:
+    cpu: "0.4"
+  limits:
+    cpu: "1.0"
+
+container:
+  ports:
+    - name: http
+      containerPort: 8080
+      servicePort: 80
+      protocol: TCP
+
+ingress:
+  internal:
+    enabled: true
+    port: http
+
+healthChecks:
+  livenessProbe:
+    httpGet:
+      path: /petclinic/actuator/health
+      port: http
+    initialDelaySeconds: 100
+    timeoutSeconds: 4
+    periodSeconds: 20
+    failureThreshold: 6
+  readinessProbe:
+    httpGet:
+      path: /petclinic/actuator/health
+      port: http
+    initialDelaySeconds: 100
+    timeoutSeconds: 4
+    periodSeconds: 20
+    failureThreshold: 6
+
+serviceMonitor:
+  enabled: true
+  path: /petclinic/actuator/prometheus
+  port: http
+

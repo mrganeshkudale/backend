@@ -1,0 +1,29 @@
+replicaCount: 1
+memory_limit: 500
+
+resources:
+  requests:
+    cpu: "0.2"
+  limits:
+    cpu: "0.5"
+
+container:
+  ports:
+    - name: http
+      containerPort: 8080
+      servicePort: 80
+      protocol: TCP
+
+ingress:
+  internal:
+    enabled: true
+    port: http
+
+healthChecks:
+  livenessProbe:
+  readinessProbe:
+
+serviceMonitor:
+  enabled: true
+  path: /manage/metrics
+  port: http
