@@ -1,10 +1,10 @@
-pipeline{
-  agent {dockerfile true}
-  stages{
-    stage("Building"){
-      steps{
-        sh "mvn build"
-      }
+pipeline {
+    agent { dockerfile true }
+    stages {
+        stage('Building') {
+            steps {
+                echo "Building"
+            }
+        }
     }
-  }
 }
